@@ -29,10 +29,14 @@ void setup()
   for(int i=0; i<4; i++) {
     pinMode(FSR_PINS[i], INPUT);
   }
+  
 }
+
 
 void loop() 
 {
+  float fsrR_arr[4];
+  float force_arr[4];
   for(int i=0; i<4; i++) {
     int FSR_PIN = FSR_PINS[i];
     int fsrADC = analogRead(FSR_PIN);
@@ -45,7 +49,7 @@ void loop()
       // Use voltage and static resistor value to 
       // calculate FSR resistance:
       float fsrR = R_DIV * (VCC / fsrV - 1.0);
-      Serial.println("FSR #" + String(FSR_PIN) + "Resistance: " + String(fsrR) + " ohms");
+      //Serial.println("FSR #" + String(FSR_PIN) + "Resistance: " + String(fsrR) + " ohms");
       // Guesstimate force based on slopes in figure 3 of
       // FSR datasheet:
       float force;
@@ -55,15 +59,22 @@ void loop()
         force = (fsrG - 0.00075) / 0.00000032639;
       else
         force =  fsrG / 0.000000642857;
-      Serial.println("Force: " + String(force) + " g");
-      Serial.println();
+      //Serial.println("Force: " + String(force) + " g");
+      //Serial.println();
   
-      
+      fsrR_arr[i] = fsrR;
+      force_arr[i] = force;
     }
     else
     {
+      fsrR_arr[i] = 0;
+      force_arr[i] = 0;
+      
       // No pressure detected
     }
   }
+  Serial.println("Forces:\t" + String(force_arr[3]) + "\t\t" + String(force_arr[0]) );
+  Serial.println("\t" + String(force_arr[2]) + "\t\t" + String(force_arr[1]) );
+  Serial.println("\n\n\n");
   delay(200);
 }
