@@ -1,4 +1,5 @@
 # superlounge-chair-music
+Currently, simply prints the force of each resistor. 
 ## Requirements:
 * Arduino
 * 4 Force Sensitive Resistors, hooked up as in [this tutorial](https://learn.sparkfun.com/tutorials/force-sensitive-resistor-hookup-guide/all).
